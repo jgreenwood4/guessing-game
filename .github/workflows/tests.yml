@@ -22,11 +22,11 @@ jobs:
       # 1. Check out (download) your repository's code onto the machine,
       #    so the later steps can see game.py and test_game.py.
       - name: Check out the code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # 2. Install Python 3 on the machine and put it on the PATH.
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.x"   # latest available Python 3
 
