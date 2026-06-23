@@ -1,0 +1,43 @@
+# Name shown in the GitHub "Actions" tab for this workflow.
+name: Tests
+
+# When should this workflow run?
+# - on push:         every time you push commits to any branch
+# - on pull_request: also run when someone opens/updates a PR (catches
+#                    problems before they're merged). Remove this if you
+#                    only want it to run on push.
+on:
+  push:
+  pull_request:
+
+jobs:
+  # A workflow is made of one or more "jobs". We have one job called "test".
+  test:
+    # The virtual machine GitHub spins up to run our job. "ubuntu-latest"
+    # is a fresh Linux box provided free for public repos.
+    runs-on: ubuntu-latest
+
+    # "steps" run in order, top to bottom, on that machine.
+    steps:
+      # 1. Check out (download) your repository's code onto the machine,
+      #    so the later steps can see game.py and test_game.py.
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      # 2. Install Python 3 on the machine and put it on the PATH.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"   # latest available Python 3
+
+      # 3. Install pytest using pip (the --upgrade just keeps pip current).
+      - name: Install pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      # 4. Run the test suite. If any test fails, this step exits with a
+      #    non-zero code, which marks the whole workflow as failed (the
+      #    red X you'd see on the commit / PR).
+      - name: Run tests
+        run: pytest
