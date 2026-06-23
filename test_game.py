@@ -40,3 +40,23 @@ def test_boundary_values():
     assert check_guess(100, 1) == "high"   # 100 is above 1
     assert check_guess(1, 100) == "low"    # 1 is below 100
     assert check_guess(1, 1) == "correct"  # 1 equals 1
+
+
+def test_guessing_exactly_one():
+    # Edge case: the smallest valid guess, 1.
+    # If the answer happens to be 1, guessing 1 should win ("correct").
+    assert check_guess(1, 1) == "correct"
+    # Otherwise the answer is somewhere from 2 to 100, so a guess of 1
+    # is always below it and should report "low".
+    assert check_guess(1, 2) == "low"
+    assert check_guess(1, 100) == "low"
+
+
+def test_guessing_exactly_one_hundred():
+    # Edge case: the largest valid guess, 100.
+    # If the answer happens to be 100, guessing 100 should win ("correct").
+    assert check_guess(100, 100) == "correct"
+    # Otherwise the answer is somewhere from 1 to 99, so a guess of 100
+    # is always above it and should report "high".
+    assert check_guess(100, 99) == "high"
+    assert check_guess(100, 1) == "high"
